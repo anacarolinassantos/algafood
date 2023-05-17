@@ -2,6 +2,7 @@ package com.br.api.algafood.controller;
 
 import com.br.api.algafood.model.Cliente;
 import com.br.api.algafood.repository.ClienteRepository;
+import com.br.api.algafood.service.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,9 @@ public class ClienteController {
     @Autowired
     private ClienteRepository clienteRepository;
 
+    @Autowired
+    private ClienteService clienteService;
+
     @GetMapping
     public List<Cliente> listar() {
         return clienteRepository.findAll();
@@ -31,7 +35,7 @@ public class ClienteController {
 
     @PostMapping
     public Cliente cadastrar(@Valid @RequestBody Cliente cliente) {
-        return clienteRepository.save(cliente);
+        return clienteService.salvar(cliente);
     }
 
     @PutMapping("/{id}")
@@ -40,12 +44,12 @@ public class ClienteController {
             return ResponseEntity.notFound().build();
         }
         cliente.setId(id);
-        cliente = clienteRepository.save(cliente);
+        cliente = clienteService.salvar(cliente);
         return ResponseEntity.ok(cliente);
     }
 
     @DeleteMapping("{id}")
     public void excluir(@PathVariable Long id) {
-        clienteRepository.deleteById(id);
+        clienteService.excluir(id);
     }
 }
