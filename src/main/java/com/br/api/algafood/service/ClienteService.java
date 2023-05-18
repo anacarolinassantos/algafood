@@ -1,7 +1,7 @@
 package com.br.api.algafood.service;
 
 import com.br.api.algafood.exceptions.NegocioException;
-import com.br.api.algafood.model.Cliente;
+import com.br.api.algafood.entity.Cliente;
 import com.br.api.algafood.repository.ClienteRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package com.br.api.algafood.controller;
 
-import com.br.api.algafood.model.Cliente;
+import com.br.api.algafood.entity.Cliente;
 import com.br.api.algafood.repository.ClienteRepository;
 import com.br.api.algafood.service.ClienteService;
 import jakarta.validation.Valid;

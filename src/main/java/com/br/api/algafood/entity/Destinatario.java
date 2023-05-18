@@ -1,4 +1,4 @@
-package com.br.api.algafood.model;
+package com.br.api.algafood.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

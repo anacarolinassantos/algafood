@@ -1,4 +1,4 @@
-package com.br.api.algafood.model;
+package com.br.api.algafood.entity;
 
 import com.br.api.algafood.enuns.StatusEntrega;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -11,6 +11,9 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -46,4 +49,18 @@ public class Entrega{
 
     @Embedded
     private Destinatario destinatario;
+
+    @OneToMany(mappedBy = "entrega", cascade = CascadeType.ALL)
+    private List<Ocorrencia> ocorrencias = new ArrayList<>();
+
+    public Ocorrencia adicionarOcorrencia(String descricao) {
+        Ocorrencia ocorrencia = new Ocorrencia();
+        ocorrencia.setDescricao(descricao);
+        ocorrencia.setDataRegistro(OffsetDateTime.now());
+        ocorrencia.setEntrega(this);
+
+        this.getOcorrencias().add(ocorrencia);
+
+        return ocorrencia;
+    }
 }
