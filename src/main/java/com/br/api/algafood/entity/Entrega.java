@@ -1,6 +1,7 @@
 package com.br.api.algafood.entity;
 
 import com.br.api.algafood.enuns.StatusEntrega;
+import com.br.api.algafood.exceptions.NegocioException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -35,7 +36,7 @@ public class Entrega{
     private LocalDateTime dataPedido;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private LocalDateTime dataFinalizacao;
+    private OffsetDateTime dataFinalizacao;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Enumerated(EnumType.STRING)
@@ -62,5 +63,15 @@ public class Entrega{
         this.getOcorrencias().add(ocorrencia);
 
         return ocorrencia;
+    }
+    public void finalizar(){
+        if(!podeSerFinalizada()){
+            throw new NegocioException("Entrega não pode ser finalizada");
+        }
+        setStatus(StatusEntrega.FINALIZADA);
+        setDataFinalizacao(OffsetDateTime.now());
+    }
+    public boolean podeSerFinalizada(){
+        return StatusEntrega.PENDENTE.equals(getStatus());
     }
 }
